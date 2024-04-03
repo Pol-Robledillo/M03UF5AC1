@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace M03UF5AC1
 {
-    public class Score
+    public class Score : IComparable<Score>
     {
         public string? Player { get; set; }
         public string? Mission { get; set; }
@@ -24,17 +24,36 @@ namespace M03UF5AC1
         }
         public static bool ValidatePlayerFormat(string player)
         {
+            const string MsgPlayerFormatError = "Player name must contain only letters.";
             Regex regex = new Regex(@"^[a-zA-Z]+$");
+            if (!regex.IsMatch(player))
+            {
+                Console.WriteLine(MsgPlayerFormatError);
+            }
             return regex.IsMatch(player);
         }
         public static bool ValidateMissionFormat(string mission)
         {
-            List<string> nombresConsonantesGriegas = [ "Beta", "Gamma", "Delta", "Zeta", "Theta", "Kappa", "Lambda", "Mu", "Nu", "Xi", "Pi", "Rho", "Sigma", "Tau", "Phi", "Chi", "Psi", "Omega" ];
-
+            const string MsgMissionFormatError = "Mission name must start with the name of a greek letter followed by a ''-'' and three numbers.";
+            Regex regex = new Regex(@"^(beta|gamma|delta|zeta|theta|kappa|lambda|mu|nu|xi|pi|rho|sigma|tau|phi|chi|psi)-\d{3}$");
+            if (!regex.IsMatch(mission))
+            {
+                Console.WriteLine(MsgMissionFormatError);
+            }
+            return regex.IsMatch(mission);
         }
         public static bool ValidateScorePoints(int scorePoints)
         {
+            const string MsgScorePointsError = "Score points must be between 0 and 500.";
+            if (scorePoints < 0 || scorePoints > 500)
+            {
+                Console.WriteLine(MsgScorePointsError);
+            }
             return scorePoints >= 0 && scorePoints <= 500;
+        }
+        public int CompareTo(Score? other)
+        {
+            return ScorePoints.CompareTo(other.ScorePoints);
         }
     }
 }

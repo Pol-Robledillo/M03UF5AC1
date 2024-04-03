@@ -10,10 +10,14 @@ namespace M03UF5AC1
     {
         public static List<Score> GenerateUniqueRanking(List<Score> scores)
         {
-            var filteredScores = from score in scores
-                                 group score by new { score.Player, score.Mission } into g
-                                 select g.First();
-
+            List<Score> filteredScores = new List<Score>();
+            var filteredScoresVar = scores.GroupBy(score => new { score.Player, score.Mission })
+                                          .Select(group => group.OrderByDescending(score => score.ScorePoints).First());
+            foreach (Score score in filteredScoresVar)
+            {
+                filteredScores.Add(score);
+            }
+            filteredScores.Sort();
             return filteredScores;
         }
     }
