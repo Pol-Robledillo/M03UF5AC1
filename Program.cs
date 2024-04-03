@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 namespace M03UF5AC1
 {
     class Program
