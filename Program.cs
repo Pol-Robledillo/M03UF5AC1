@@ -8,7 +8,8 @@ namespace M03UF5AC1
             const string MsgInputPlayer = "Enter player name:";
             const string MsgInputMission = "Enter mission name:";
             const string MsgInputScore = "Enter score points:";
-            const int numMissions = 4;
+            const string MsgScoreSaved = "Score nº{0} saved.";
+            const int numMissions = 2;
 
 
             List<Score> scores = new List<Score>();
@@ -21,20 +22,23 @@ namespace M03UF5AC1
                 {
                     Console.WriteLine(MsgInputPlayer);
                     player = Console.ReadLine();
-                } while (!Score.ValidatePlayerFormat(player));
+                } while (!Game.ValidatePlayerFormat(player));
                 do
                 {
                     Console.WriteLine(MsgInputMission);
                     mission = Console.ReadLine();
-                } while (!Score.ValidateMissionFormat(mission));
+                } while (!Game.ValidateMissionFormat(mission));
                 do
                 {
                     Console.WriteLine(MsgInputScore);
                     scorePoints = int.Parse(Console.ReadLine());
-                } while (!Score.ValidateScorePoints(scorePoints));
+                } while (!Game.ValidateScorePoints(scorePoints));
                 scores.Add(new Score(player, mission, scorePoints));
+                Console.WriteLine(MsgScoreSaved, i + 1);
+                Console.WriteLine();
             }
             List<Score> filteredScores = Game.GenerateUniqueRanking(scores);
+            filteredScores.Sort((x, y) => x.ScorePoints < y.ScorePoints ? 1 : x.ScorePoints > y.ScorePoints ? -1 : 0);
             foreach (Score score in filteredScores)
             {
                 Console.WriteLine(score);
