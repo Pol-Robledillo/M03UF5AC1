@@ -9,7 +9,7 @@ namespace M03UF5AC1
             const string MsgInputMission = "Enter mission name:";
             const string MsgInputScore = "Enter score points:";
             const string MsgScoreSaved = "Score nº{0} saved.";
-            const int numMissions = 2;
+            const int numMissions = 10;
 
 
             List<Score> scores = new List<Score>();
